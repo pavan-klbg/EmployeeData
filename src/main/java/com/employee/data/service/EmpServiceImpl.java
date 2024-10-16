@@ -1,0 +1,46 @@
+package com.employee.data.service;
+
+import com.employee.data.entity.Employee;
+import com.employee.data.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@Service
+public class EmpServiceImpl implements EmployeeService{
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+
+    @Override
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getEmployeeById(Integer id) {
+        return employeeRepository.findById(id).orElseThrow(()->new RuntimeException("emp not found with id "+id));
+    }
+
+    @Override
+    public Employee updateEmployee(Integer id,Employee employee) {
+            Employee existingEmp = getEmployeeById(id);
+        existingEmp.setFirstName(employee.getFirstName());
+        existingEmp.setLastName(employee.getLastName());
+        existingEmp.setEmailId(employee.getEmailId());
+        existingEmp.setEmpAge(employee.getEmpAge());
+        existingEmp.setPhoneNumber(employee.getPhoneNumber());
+        existingEmp.setSalary(employee.getSalary());
+        existingEmp.setTechinalSkills(employee.getTechinalSkills());
+        final Employee updatedEmp=employeeRepository.save(existingEmp);
+        return updatedEmp;
+    }
+}
