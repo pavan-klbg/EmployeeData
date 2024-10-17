@@ -21,32 +21,32 @@ public class Employee {
     private Integer empId;
 
     @NotNull(message = "first name and last name cannot be empty")
-    private String firstName,lastName;
+    private String firstName, lastName;
 
     @Email(message = "please enter valid email id")
     private String emailId;
 
     @Max(message = "maximum age must not exceed 60", value = 60)
-    @Min(message = "minimum age is 24",value = 24)
+    @Min(message = "minimum age is 24", value = 24)
     private Integer empAge;
 
     @NotNull(message = "Must not be Empty and NULL")
     private String empAddress;
 
-    @NotNull(message = "Must not be Empty and NULL")
-    private Long phoneNumber;
+    @Pattern(regexp = "\\d{10}", message = "mobile number is not valid or less than 10 digits")
+    private String phoneNumber;
 
     @NotNull(message = "please specify active or inactive")
     private Boolean workStatus;
 
     @Transient
-   //@NotEmpty(message = "DOJ cannot be empty")
+    //@NotEmpty(message = "DOJ cannot be empty")
     private Date doj;
 
     @NotNull(message = "please specify salary")
     private Double Salary;
 
     @NotNull(message = "please enter atleast one skillset")
-    private List<String> techinalSkills;
+    private List<String> technicalSkills;
 
 }
