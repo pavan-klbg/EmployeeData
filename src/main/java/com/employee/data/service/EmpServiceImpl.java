@@ -3,10 +3,10 @@ package com.employee.data.service;
 import com.employee.data.entity.Employee;
 import com.employee.data.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class EmpServiceImpl implements EmployeeService{
@@ -24,7 +24,7 @@ public class EmpServiceImpl implements EmployeeService{
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
-
+    @Cacheable(value = "records",key = "#id")
     @Override
     public Employee getEmployeeById(Integer id) {
         return employeeRepository.findById(id).orElseThrow(()->new RuntimeException("emp not found with id "+id));
@@ -39,7 +39,7 @@ public class EmpServiceImpl implements EmployeeService{
         existingEmp.setEmpAge(employee.getEmpAge());
         existingEmp.setPhoneNumber(employee.getPhoneNumber());
         existingEmp.setSalary(employee.getSalary());
-        existingEmp.setTechinalSkills(employee.getTechinalSkills());
+        existingEmp.setTechnicalSkills(employee.getTechnicalSkills());
         final Employee updatedEmp=employeeRepository.save(existingEmp);
         return updatedEmp;
     }
