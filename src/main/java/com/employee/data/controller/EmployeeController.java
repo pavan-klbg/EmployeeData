@@ -4,13 +4,13 @@ import com.employee.data.entity.Employee;
 import com.employee.data.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Validated
 @RestController
 public class EmployeeController {
@@ -43,7 +43,15 @@ public class EmployeeController {
     }
 
     // delete all employee
+
+
     // delete emp by id
+    @DeleteMapping("employee/{id}")
+    public ResponseEntity<String> deleteEmpById(@PathVariable ("id") Integer id){
+        employeeService.DeleteEmployee(id);
+        return new ResponseEntity<>("employee "+id+" deleted",HttpStatus.OK);
+    }
+
 
 
 }

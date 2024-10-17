@@ -43,4 +43,9 @@ public class EmpServiceImpl implements EmployeeService{
         final Employee updatedEmp=employeeRepository.save(existingEmp);
         return updatedEmp;
     }
+
+    @Override
+    public void DeleteEmployee(Integer id)  {
+        employeeRepository.deleteById(id);
+    }
 }
