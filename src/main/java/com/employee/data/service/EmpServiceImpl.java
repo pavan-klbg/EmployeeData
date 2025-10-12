@@ -1,7 +1,11 @@
 package com.employee.data.service;
 
+import com.employee.data.dto.CreateEmployeeRequest;
+import com.employee.data.dto.EmployeeResponse;
 import com.employee.data.entity.Employee;
+import com.employee.data.mapper.EmployeeMapper;
 import com.employee.data.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -9,15 +13,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmpServiceImpl implements EmployeeService{
 
-    @Autowired
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final EmployeeMapper employeeMapper;
 
 
     @Override
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeResponse saveEmployee(CreateEmployeeRequest request) {
+        Employee emp=employeeMapper.toEntity(request);
+Employee saved=employeeRepository.save(emp);
+        return employeeMapper.toResponse(saved);
     }
 
     @Override

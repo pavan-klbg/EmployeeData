@@ -1,5 +1,7 @@
 package com.employee.data.controller;
 
+import com.employee.data.dto.CreateEmployeeRequest;
+import com.employee.data.dto.EmployeeResponse;
 import com.employee.data.entity.Employee;
 import com.employee.data.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -20,8 +22,11 @@ public class EmployeeController {
 
     // method to save employee
     @PostMapping("/employee")
-    public ResponseEntity<Employee> saveEmployeeData(@Valid @RequestBody Employee employee) {
-        return new ResponseEntity<>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
+    public ResponseEntity<EmployeeResponse> saveEmployeeData(@Valid @RequestBody CreateEmployeeRequest employee) {
+    EmployeeResponse response=employeeService.saveEmployee(employee);
+return ResponseEntity
+        .status(201)
+        .body(response);
     }
 
     // get all employees
