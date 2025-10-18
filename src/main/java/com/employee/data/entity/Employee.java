@@ -23,7 +23,8 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer empId;
-    private String firstName, lastName;
+    private String firstName;
+    private String lastName;
     private String emailId;
     private Integer empAge;
     private String empAddress;
@@ -32,7 +33,7 @@ public class Employee implements Serializable {
     @Transient
     //@NotEmpty(message = "DOJ cannot be empty")
     private Date doj;
-    private Double Salary;
+    private Double salary;
     private List<String> technicalSkills;
 
 }

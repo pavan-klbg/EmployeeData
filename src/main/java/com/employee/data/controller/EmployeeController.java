@@ -16,17 +16,22 @@ import java.util.List;
 @Validated
 @RestController
 public class EmployeeController {
+
+    private final EmployeeService employeeService;
+
     @Autowired
-    EmployeeService employeeService;
+    EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
 
     // method to save employee
     @PostMapping("/employee")
     public ResponseEntity<EmployeeResponse> saveEmployeeData(@Valid @RequestBody CreateEmployeeRequest employee) {
-    EmployeeResponse response=employeeService.saveEmployee(employee);
-return ResponseEntity
-        .status(201)
-        .body(response);
+        EmployeeResponse response = employeeService.saveEmployee(employee);
+        return ResponseEntity
+                .status(201)
+                .body(response);
     }
 
     // get all employees
@@ -52,11 +57,10 @@ return ResponseEntity
 
     // delete emp by id
     @DeleteMapping("employee/{id}")
-    public ResponseEntity<String> deleteEmpById(@PathVariable ("id") Integer id){
-        employeeService.DeleteEmployee(id);
-        return new ResponseEntity<>("employee "+id+" deleted",HttpStatus.OK);
+    public ResponseEntity<String> deleteEmpById(@PathVariable("id") Integer id) {
+        employeeService.deleteEmployee(id);
+        return new ResponseEntity<>("employee " + id + " deleted", HttpStatus.OK);
     }
-
 
 
 }
