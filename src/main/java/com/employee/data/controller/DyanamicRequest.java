@@ -1,5 +1,5 @@
 package com.employee.data.controller;
 
-public class DyanamicRequest {
+public interface DyanamicRequest {
     // some code from feature 2
 }
