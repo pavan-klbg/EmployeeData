@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EmployeeRecordsApplicationTests {
 
-	@Test
-	void contextLoads() {
-		// TODO
-	}
+    @Test
+    void contextLoads() {
+        System.out.println("testing");
+    }
 
 }
