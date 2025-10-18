@@ -1,5 +1,6 @@
 package com.employee.data.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class GlobalExceptionHandler {
         if (cause instanceof InvalidFormatException invalidFormat) {
             // Field exists but wrong type
             String fieldName = invalidFormat.getPath().stream()
-                    .map(ref -> ref.getFieldName())
+                    .map(JsonMappingException.Reference::getFieldName)
                     .reduce((first, second) -> second)  // get last field in path
                     .orElse("unknown");
             String targetType = invalidFormat.getTargetType().getSimpleName();
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler {
             // Field missing or value missing
             String fieldName = mismatch.getPath().isEmpty() ? "unknown field"
                     : mismatch.getPath().stream()
-                    .map(ref -> ref.getFieldName())
+                    .map(JsonMappingException.Reference::getFieldName)
                     .reduce((first, second) -> second)
                     .orElse("unknown field");
             message = String.format("Missing or invalid value for field '%s'.", fieldName);
@@ -49,7 +50,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> handleMethodArgsNotValid(MethodArgumentNotValidException ex){
         Map<String, String> errors = new LinkedHashMap<>();
-       ex.getBindingResult().getAllErrors().forEach((error)->{
+       ex.getBindingResult().getAllErrors().forEach(error->{
            String fieldName=((FieldError) error).getField();
            String errorMessage=error.getDefaultMessage();
            errors.put(fieldName,errorMessage);
@@ -57,12 +58,4 @@ public class GlobalExceptionHandler {
 return  new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
 
     }
-//
-//    // resource not found exception code
-//
-//    @ExceptionHandler(RuntimeException.class)
-//    public void EmployeeNotFoundException(String message){
-//        super(message);
-//    }
-//
 }
